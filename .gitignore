@@ -1,0 +1,37 @@
+# Node
+node_modules/
+.npm-cache/
+
+# Expo/React Native build
+.expo/
+.expo-shared/
+android/.gradle/
+android/.idea/
+android/build/
+android/app/build/
+android/app/release/
+android/local.properties
+
+ios/Pods/
+ios/build/
+ios/*.xcworkspace/xcuserdata/
+
+# Logs
+logs/
+*.log
+
+# Misc
+.DS_Store
+.env
+.env.*
+# Keystores (track elsewhere securely)
+*.keystore
+*.jks
+
+# Web
+dist/
+build/
+
+# Metro
+.expo-dev-client/
+
