@@ -30,9 +30,9 @@ export default function IdentityPassportScreen() {
           <GradientButton title={isConnecting ? "Connecting…" : "Connect Wallet"} onPress={login} style={{ width: "100%", marginTop: 12 }} />
         </Card>
       ) : (
-        <Card style={styles.passportCard}>
+        <Card style={[styles.passportCard, { alignItems: "center" }]}>
           <Text style={styles.label}>Status</Text>
-          <Text style={[styles.badge, isVerified ? styles.badgeOk : styles.badgeWarn]}>
+          <Text style={[styles.badge, isVerified ? styles.badgeOk : styles.badgeWarn, { alignSelf: "center" }]}>
             {isLoading ? "Checking status…" : isVerified ? "✅ Insurance Verified" : "❌ Not Verified"}
           </Text>
           <View style={{ height: 8 }} />
