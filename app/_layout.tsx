@@ -43,8 +43,7 @@ export default function RootLayout() {
           <Stack>
             <Stack.Screen name="index" options={{ headerShown: false }} />
             <Stack.Screen name="identity" options={{ title: "My Coverage" }} />
-            <Stack.Screen name="pooling" options={{ title: "Pooling" }} />
-            <Stack.Screen name="ride-confirmation" options={{ title: "Ride Confirmation" }} />
+            <Stack.Screen name="lookup" options={{ title: "Lookup" }} />
             <Stack.Screen name="+not-found" />
           </Stack>
           <StatusBar style="auto" />

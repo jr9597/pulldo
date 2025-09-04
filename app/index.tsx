@@ -1,45 +1,45 @@
-import ReclaimComponent from "@/components/ReclaimComponent";
-import React, { useEffect } from "react";
-import { ScrollView, StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import React, { useEffect, useState } from "react";
+import { ScrollView, StyleSheet, Text, View, TextInput } from "react-native";
 import { useRouter } from "expo-router";
 import { useVerification } from "@/components/VerificationContext";
 import { LinearGradient } from "expo-linear-gradient";
-import { GradientButton, Title, Card } from "@/components/ui";
+import { GradientButton, Title } from "@/components/ui";
+import { USER_PLATE } from "@/constants/Vehicles";
 
 export default function HomeScreen() {
   const router = useRouter();
-  const { isVerified, refresh } = useVerification();
+  const { refresh } = useVerification();
+  const [plate, setPlate] = useState("");
 
   useEffect(() => {
-    // Refresh verification when returning to home
     const t = setTimeout(() => {
       refresh();
     }, 300);
     return () => clearTimeout(t);
   }, [refresh]);
 
+  const goLookup = () => {
+    router.push({ pathname: "/lookup", params: { plate: plate || USER_PLATE } });
+  };
+
   return (
     <LinearGradient colors={["#E0F2FE", "#ffffff"]} style={styles.container}>
       <ScrollView contentContainerStyle={styles.contentContainer}>
-        <Title>Insurance-Verified Ride Sharing</Title>
+        <Title>The fastest way to know if a driver is insured</Title>
 
         <View style={styles.hero}>
-          <GradientButton
-            title={isVerified ? "View Identity Passport" : "Verify My Insurance"}
-            onPress={() => router.push("/identity")}
-            style={{ width: "100%" }}
+          <Text style={styles.subtitle}>Search by license plate or vehicle ID</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter plate (e.g., ABC1234)"
+            placeholderTextColor="#94a3b8"
+            value={plate}
+            onChangeText={setPlate}
+            autoCapitalize="characters"
           />
-          {isVerified ? (
-            <View style={styles.verifiedBadge}>
-              <Text style={styles.verifiedText}>Insurance Verified ✅</Text>
-            </View>
-          ) : null}
-          <TouchableOpacity style={styles.findPoolBtn} onPress={() => router.push("/pooling") }>
-            <Text style={styles.findPoolText}>Find Ride Pool</Text>
-          </TouchableOpacity>
+          <GradientButton title="Lookup" onPress={goLookup} style={{ width: "100%" }} />
+          <GradientButton title="My Coverage" onPress={() => router.push("/identity")} style={{ width: "100%" }} />
         </View>
-
-        {/* Verification flow moved to My Coverage screen */}
       </ScrollView>
     </LinearGradient>
   );
@@ -61,50 +61,19 @@ const styles = StyleSheet.create({
     gap: 14,
     alignItems: "center",
   },
-  descriptionContainer: {
-    backgroundColor: "#111111",
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 20,
-    borderWidth: 1,
-    borderColor: "#333333",
-  },
-  descriptionText: {
-    fontSize: 14,
-    color: "#cccccc",
-    lineHeight: 20,
-  },
-  componentContainer: {
-    backgroundColor: "#111111",
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 20,
-    borderWidth: 1,
-    borderColor: "#333333",
-  },
-  verifiedBadge: {
-    backgroundColor: "#e8f5e9",
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    borderRadius: 999,
-    borderWidth: 0,
-    alignItems: "center",
-    marginTop: 6,
-  },
-  verifiedText: {
-    color: "#2e7d32",
+  subtitle: {
+    color: "#0f172a",
     fontWeight: "700",
+    marginBottom: 6,
   },
-  findPoolBtn: {
-    backgroundColor: "#0ea5e9",
-    paddingVertical: 14,
-    paddingHorizontal: 18,
-    borderRadius: 14,
-    alignItems: "center",
+  input: {
     width: "100%",
-  },
-  findPoolText: {
-    color: "#ffffff",
-    fontWeight: "800",
+    backgroundColor: "#f1f5f9",
+    borderRadius: 14,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    color: "#0f172a",
+    borderColor: "#e2e8f0",
+    borderWidth: 1,
   },
 });

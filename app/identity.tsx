@@ -32,9 +32,14 @@ export default function IdentityPassportScreen() {
       ) : (
         <Card style={styles.passportCard}>
           <Text style={styles.label}>Status</Text>
-          <Text style={styles.status}>
-            {isLoading ? "Checking status…" : isVerified ? "Verified Insurance ✅" : "Not Verified ❌"}
+          <Text style={[styles.badge, isVerified ? styles.badgeOk : styles.badgeWarn]}>
+            {isLoading ? "Checking status…" : isVerified ? "✅ Insurance Verified" : "❌ Not Verified"}
           </Text>
+          <View style={{ height: 8 }} />
+          <Text style={styles.label}>Plate</Text>
+          <Text style={styles.statusValue}>ABC1234</Text>
+          <Text style={styles.label}>Coverage</Text>
+          <Text style={styles.statusValue}>{isVerified ? "personal" : "unknown"}</Text>
         </Card>
       )}
 
@@ -67,6 +72,25 @@ const styles = StyleSheet.create({
     color: "#0f172a",
     fontWeight: "800",
     fontSize: 18,
+  },
+  statusValue: {
+    color: "#0f172a",
+    fontWeight: "800",
+  },
+  badge: {
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 999,
+    alignSelf: "flex-start",
+    fontWeight: "800",
+  },
+  badgeOk: {
+    color: "#166534",
+    backgroundColor: "#dcfce7",
+  },
+  badgeWarn: {
+    color: "#7f1d1d",
+    backgroundColor: "#fee2e2",
   },
 });
 
