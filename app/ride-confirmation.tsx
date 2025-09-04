@@ -1,6 +1,7 @@
 import React from "react";
-import { Alert, Linking, Platform, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Linking, Platform, StyleSheet, Text, View } from "react-native";
 import { useVerification } from "@/components/VerificationContext";
+import { Card, GradientButton, Title } from "@/components/ui";
 
 const uberDeepLink = Platform.select({
   ios: "uber://?action=setPickup&pickup=my_location",
@@ -28,16 +29,15 @@ export default function RideConfirmationScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={[styles.card, isVerified ? styles.verified : styles.unverified]}>
-        <Text style={styles.title}>{isVerified ? "Ride Pool Created 🚖" : "Verification required ❌"}</Text>
+      <Title>{isVerified ? "Ride Pool Created 🚖" : "Verification required ❌"}</Title>
+
+      <Card style={{ width: "100%", marginTop: 20, alignItems: "center" }}>
         <Text style={styles.subtitle}>
           {isVerified ? "You're good to go." : "Verify insurance to continue."}
         </Text>
-      </View>
+      </Card>
 
-      <TouchableOpacity style={styles.primaryButton} onPress={callRide}>
-        <Text style={styles.primaryText}>Call Ride</Text>
-      </TouchableOpacity>
+      <GradientButton title="🚗 Call Ride" onPress={callRide} style={{ width: "100%", marginTop: 16 }} />
     </View>
   );
 }
@@ -45,43 +45,14 @@ export default function RideConfirmationScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#000000",
-    padding: 20,
-    paddingTop: 60,
-  },
-  card: {
-    padding: 20,
-    borderRadius: 12,
-    borderWidth: 1,
-    marginBottom: 20,
-  },
-  verified: {
-    backgroundColor: "#133a1a",
-    borderColor: "#2e7d32",
-  },
-  unverified: {
-    backgroundColor: "#2a1212",
-    borderColor: "#7f1d1d",
-  },
-  title: {
-    color: "#ffffff",
-    fontSize: 20,
-    fontWeight: "700",
-    marginBottom: 8,
+    backgroundColor: "#f8fafc",
+    padding: 24,
+    paddingTop: 80,
+    alignItems: "center",
   },
   subtitle: {
-    color: "#cccccc",
-  },
-  primaryButton: {
-    backgroundColor: "#ffffff",
-    padding: 16,
-    borderRadius: 10,
-    alignItems: "center",
-    marginBottom: 12,
-  },
-  primaryText: {
-    color: "#000000",
-    fontWeight: "600",
+    color: "#334155",
+    fontWeight: "700",
   },
 });
 

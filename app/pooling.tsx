@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 import { useRouter } from "expo-router";
+import { Card, GradientButton, Title } from "@/components/ui";
 
 type Rider = {
   id: string;
@@ -20,24 +21,25 @@ export default function PoolingScreen() {
 
   return (
     <View style={styles.container}>
+      <Title>Nearby Riders</Title>
+
       <FlatList
+        style={{ width: "100%" }}
         data={riders}
         keyExtractor={(item) => item.id}
-        contentContainerStyle={{ paddingBottom: 20 }}
+        contentContainerStyle={{ paddingBottom: 20, marginTop: 16, gap: 12 }}
         renderItem={({ item }) => (
-          <View style={styles.card}>
+          <Card>
             <View style={styles.row}>
-              <Text style={styles.name}>{item.name}</Text>
+              <Text style={styles.name}>👤 {item.name}</Text>
               <Text style={styles.distance}>{item.distance}</Text>
             </View>
-            <Text style={styles.verified}>Insurance Verified ✅</Text>
-          </View>
+            <Text style={styles.verified}>✅ Insurance Verified</Text>
+          </Card>
         )}
       />
 
-      <TouchableOpacity style={styles.primaryButton} onPress={() => router.push("/ride-confirmation")}>
-        <Text style={styles.primaryText}>Join Ride Pool</Text>
-      </TouchableOpacity>
+      <GradientButton title="Join Ride Pool" onPress={() => router.push("/ride-confirmation")} style={{ width: "100%", marginTop: 8 }} />
     </View>
   );
 }
@@ -45,17 +47,10 @@ export default function PoolingScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#000000",
-    padding: 20,
-    paddingTop: 60,
-  },
-  card: {
-    backgroundColor: "#111111",
-    borderColor: "#333333",
-    borderWidth: 1,
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 12,
+    backgroundColor: "#f8fafc",
+    padding: 24,
+    paddingTop: 80,
+    alignItems: "center",
   },
   row: {
     flexDirection: "row",
@@ -64,25 +59,16 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   name: {
-    color: "#ffffff",
-    fontWeight: "700",
+    color: "#0f172a",
+    fontWeight: "800",
   },
   distance: {
-    color: "#aaaaaa",
+    color: "#64748b",
+    fontWeight: "600",
   },
   verified: {
-    color: "#72d572",
-  },
-  primaryButton: {
-    backgroundColor: "#ffffff",
-    padding: 16,
-    borderRadius: 10,
-    alignItems: "center",
-    marginTop: 8,
-  },
-  primaryText: {
-    color: "#000000",
-    fontWeight: "600",
+    color: "#16a34a",
+    fontWeight: "700",
   },
 });
 

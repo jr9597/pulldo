@@ -3,6 +3,8 @@ import React, { useEffect } from "react";
 import { ScrollView, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import { useVerification } from "@/components/VerificationContext";
+import { LinearGradient } from "expo-linear-gradient";
+import { GradientButton, Title, Card } from "@/components/ui";
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -17,68 +19,49 @@ export default function HomeScreen() {
   }, [refresh]);
 
   return (
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={styles.contentContainer}
-    >
-      <Text style={styles.title}>Ride Share Demo</Text>
+    <LinearGradient colors={["#E0F2FE", "#ffffff"]} style={styles.container}>
+      <ScrollView contentContainerStyle={styles.contentContainer}>
+        <Title>Insurance-Verified Ride Sharing</Title>
 
-      <View style={styles.descriptionContainer}>
-        <Text style={styles.descriptionText}>
-          This tab provides zero-knowledge proof functionality using Reclaim
-          Protocol. You can verify your identity without revealing sensitive
-          data. This is a proof of concept and is not production ready.
-        </Text>
-      </View>
-
-      {isVerified ? (
-        <View style={styles.verifiedBadge}>
-          <Text style={styles.verifiedText}>Insurance Verified ✅</Text>
+        <View style={styles.hero}>
+          <GradientButton
+            title={isVerified ? "View Identity Passport" : "Verify My Insurance"}
+            onPress={() => router.push("/identity")}
+            style={{ width: "100%" }}
+          />
+          {isVerified ? (
+            <View style={styles.verifiedBadge}>
+              <Text style={styles.verifiedText}>Insurance Verified ✅</Text>
+            </View>
+          ) : null}
+          <TouchableOpacity style={styles.findPoolBtn} onPress={() => router.push("/pooling") }>
+            <Text style={styles.findPoolText}>Find Ride Pool</Text>
+          </TouchableOpacity>
         </View>
-      ) : null}
 
-      <TouchableOpacity style={styles.primaryButton} onPress={() => router.push("/identity") }>
-        <Text style={styles.primaryText}>{isVerified ? "View Identity Passport" : "Verify My Insurance"}</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.secondaryButton} onPress={() => router.push("/pooling") }>
-        <Text style={styles.secondaryText}>Find Ride Pool</Text>
-      </TouchableOpacity>
-
-      <View style={styles.componentContainer}>
-        <ReclaimComponent />
-      </View>
-    </ScrollView>
+        <Card style={{ marginTop: 24 }}>
+          <ReclaimComponent />
+        </Card>
+      </ScrollView>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#000000",
   },
   contentContainer: {
-    padding: 20,
-    paddingTop: 60,
-    paddingBottom: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
-    color: "#ffffff",
-    textAlign: "center",
-  },
-  notConnectedContainer: {
-    flex: 1,
-    justifyContent: "center",
+    padding: 24,
+    paddingTop: 80,
+    paddingBottom: 40,
     alignItems: "center",
-    paddingVertical: 40,
   },
-  notConnectedText: {
-    fontSize: 16,
-    color: "#cccccc",
-    textAlign: "center",
+  hero: {
+    width: "100%",
+    marginTop: 20,
+    gap: 14,
+    alignItems: "center",
   },
   descriptionContainer: {
     backgroundColor: "#111111",
@@ -102,40 +85,28 @@ const styles = StyleSheet.create({
     borderColor: "#333333",
   },
   verifiedBadge: {
-    backgroundColor: "#133a1a",
-    padding: 14,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: "#2e7d32",
+    backgroundColor: "#e8f5e9",
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 999,
+    borderWidth: 0,
     alignItems: "center",
-    marginBottom: 16,
+    marginTop: 6,
   },
   verifiedText: {
-    color: "#72d572",
-    fontWeight: "600",
+    color: "#2e7d32",
+    fontWeight: "700",
   },
-  primaryButton: {
-    backgroundColor: "#ffffff",
-    padding: 16,
-    borderRadius: 10,
+  findPoolBtn: {
+    backgroundColor: "#0ea5e9",
+    paddingVertical: 14,
+    paddingHorizontal: 18,
+    borderRadius: 14,
     alignItems: "center",
-    marginBottom: 12,
+    width: "100%",
   },
-  primaryText: {
-    color: "#000000",
-    fontWeight: "600",
-  },
-  secondaryButton: {
-    backgroundColor: "#222222",
-    padding: 16,
-    borderRadius: 10,
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#444444",
-    marginBottom: 20,
-  },
-  secondaryText: {
+  findPoolText: {
     color: "#ffffff",
-    fontWeight: "600",
+    fontWeight: "800",
   },
 });
