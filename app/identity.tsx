@@ -1,26 +1,46 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useVerification } from "@/components/VerificationContext";
 import { useRouter } from "expo-router";
 import { GradientButton, Card, Title } from "@/components/ui";
+import ReclaimComponent from "@/components/ReclaimComponent";
+import { useAbstraxionAccount } from "@burnt-labs/abstraxion-react-native";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function IdentityPassportScreen() {
   const router = useRouter();
   const { isVerified, isLoading, refresh } = useVerification();
+  const { isConnected, isConnecting, login } = useAbstraxionAccount();
+
+  // Auto-refresh when the screen gains focus
+  useFocusEffect(
+    useCallback(() => {
+      refresh();
+    }, [refresh])
+  );
 
   return (
     <View style={styles.container}>
-      <Title>Identity Passport</Title>
+      <Title>My Coverage</Title>
 
-      <Card style={styles.passportCard}>
-        <Text style={styles.label}>Status</Text>
-        <Text style={styles.status}>
-          {isLoading ? "Checking status…" : isVerified ? "Verified Insurance ✅" : "Not Verified ❌"}
-        </Text>
+      {!isConnected ? (
+        <Card style={[styles.passportCard, { alignItems: "center" }]}>
+          <Text style={styles.label}>Wallet</Text>
+          <Text style={styles.status}>Connect to check coverage</Text>
+          <GradientButton title={isConnecting ? "Connecting…" : "Connect Wallet"} onPress={login} style={{ width: "100%", marginTop: 12 }} />
+        </Card>
+      ) : (
+        <Card style={styles.passportCard}>
+          <Text style={styles.label}>Status</Text>
+          <Text style={styles.status}>
+            {isLoading ? "Checking status…" : isVerified ? "Verified Insurance ✅" : "Not Verified ❌"}
+          </Text>
+        </Card>
+      )}
+
+      <Card style={{ width: "100%", marginTop: 16 }}>
+        <ReclaimComponent />
       </Card>
-
-      <GradientButton title="Refresh Status" onPress={refresh} style={{ width: "100%", marginTop: 12 }} />
-      <GradientButton title="Find Ride Pool" onPress={() => router.push("/pooling")} style={{ width: "100%", marginTop: 12 }} />
     </View>
   );
 }

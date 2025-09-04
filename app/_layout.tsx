@@ -42,7 +42,7 @@ export default function RootLayout() {
         <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
           <Stack>
             <Stack.Screen name="index" options={{ headerShown: false }} />
-            <Stack.Screen name="identity" options={{ title: "Identity Passport" }} />
+            <Stack.Screen name="identity" options={{ title: "My Coverage" }} />
             <Stack.Screen name="pooling" options={{ title: "Pooling" }} />
             <Stack.Screen name="ride-confirmation" options={{ title: "Ride Confirmation" }} />
             <Stack.Screen name="+not-found" />

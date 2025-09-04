@@ -39,9 +39,7 @@ export default function HomeScreen() {
           </TouchableOpacity>
         </View>
 
-        <Card style={{ marginTop: 24 }}>
-          <ReclaimComponent />
-        </Card>
+        {/* Verification flow moved to My Coverage screen */}
       </ScrollView>
     </LinearGradient>
   );
